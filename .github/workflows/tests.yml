@@ -23,8 +23,8 @@ jobs:
           pip install -r requirements-dev.txt
       - name: Test with pytest
         run: pytest --cov=. --cov-config=.coveragerc --cov-report xml:coverage.xml
-      - name: SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@v6
-        if: (github.event.sender.login == github.event.repository.owner.login) && (github.repository == 'lnx85/delios') && (github.ref == 'refs/heads/main')
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#      - name: SonarQube scan
+#        uses: SonarSource/sonarqube-scan-action@v6
+#        if: (github.event.sender.login == github.event.repository.owner.login) && (github.repository == 'lnx85/delios') && (github.ref == 'refs/heads/main')
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
