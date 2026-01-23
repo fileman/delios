@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from datetime import timedelta
+from typing import Any
 
 from homeassistant.components.binary_sensor import DOMAIN as BINARY_SENSOR_DOMAIN
 from homeassistant.components.binary_sensor import (
@@ -60,6 +61,15 @@ class DeliosBinarySensor(CoordinatorEntity, BinarySensorEntity):
         )
         if self.coordinator.data:
             self._attr_is_on = self._attribute.value(self.coordinator.data)
+            self._internal_attributes = {
+                attribute: value(self.coordinator.data) for attribute, value in self._attribute.attributes.items()
+            }
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        """Return attributes of sensor."""
+
+        return self._internal_attributes
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -67,6 +77,9 @@ class DeliosBinarySensor(CoordinatorEntity, BinarySensorEntity):
 
         try:
             self._attr_is_on = self._attribute.value(self.coordinator.data)
+            self._internal_attributes = {
+                attribute: value(self.coordinator.data) for attribute, value in self._attribute.attributes.items()
+            }
             self.async_write_ha_state()
         except KeyError:
             pass
@@ -104,6 +117,9 @@ class DeliosSensor(CoordinatorEntity, SensorEntity):
         )
         if self.coordinator.data:
             self._internal_value = self._attribute.value(self.coordinator.data)
+            self._internal_attributes = {
+                attribute: value(self.coordinator.data) for attribute, value in self._attribute.attributes.items()
+            }
 
     @property
     def native_value(self) -> str | int | None:
@@ -111,12 +127,21 @@ class DeliosSensor(CoordinatorEntity, SensorEntity):
 
         return self._internal_value
 
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        """Return attributes of sensor."""
+
+        return self._internal_attributes
+
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
 
         try:
             self._internal_value = self._attribute.value(self.coordinator.data)
+            self._internal_attributes = {
+                attribute: value(self.coordinator.data) for attribute, value in self._attribute.attributes.items()
+            }
             self.async_write_ha_state()
         except KeyError:
             pass
@@ -192,13 +217,28 @@ class DeliosSensorsCoordinator(DeliosCoordinator):
 
     async def _async_update_data(self):
         """Fetch data from API endpoint."""
+        data: dict[str, Any] = {
+            "sensors": None,
+            "parameters": None,
+            "alarms": None,
+        }
+        # sensors
         try:
-            return {
-                "sensors": await self._client.sensors(),
-                "parameters": await self._client.parameters(),
-            }
-        except UnauthorizedClient as exception:
-            _LOGGER.error("Unable to retreive sensors data: %s", str(exception))
+            data["sensors"] = await self._client.sensors()
+        except UnauthorizedClient:
+            _LOGGER.error("Unable to retreive sensors data")
+        # parameters
+        try:
+            data["parameters"] = await self._client.parameters()
+        except UnauthorizedClient:
+            _LOGGER.error("Unable to retreive parameters data")
+        # alarms
+        try:
+            data["alarms"] = await self._client.alarms()
+        except UnauthorizedClient:
+            _LOGGER.error("Unable to retreive alarms data")
+        # return
+        return data
 
 
 class DeliosSystemCoordinator(DeliosCoordinator):
@@ -216,11 +256,25 @@ class DeliosSystemCoordinator(DeliosCoordinator):
 
     async def _async_update_data(self):
         """Fetch data from API endpoint."""
+        data: dict[str, Any] = {
+            "status": None,
+            "totalizer": None,
+            "alarms": None,
+        }
+        # status
         try:
-            return {
-                "status": await self._client.status(),
-                "totalizer": await self._client.totalizer(),
-                "firmware": await self._client.firmware(),
-            }
-        except UnauthorizedClient as exception:
-            _LOGGER.error("Unable to retreive sensors data: %s", str(exception))
+            data["status"] = await self._client.status()
+        except UnauthorizedClient:
+            _LOGGER.error("Unable to retreive status data")
+        # totalizer
+        try:
+            data["totalizer"] = await self._client.totalizer()
+        except UnauthorizedClient:
+            _LOGGER.error("Unable to retreive totalizer data")
+        # firmware
+        try:
+            data["firmware"] = await self._client.firmware()
+        except UnauthorizedClient:
+            _LOGGER.error("Unable to retreive firmware data")
+        # return
+        return data

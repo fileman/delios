@@ -44,6 +44,7 @@ class DeliosInverterAttribute:
     unit_of_measurement: Optional[str] = None
     suggested_display_precision: Optional[int] = None
     value: Callable[[Any], Any] = lambda v: v
+    attributes: dict[str, Callable[[Any], Any]] = {}
 
 
 class HelperFilterRangeType(Enum):
@@ -267,6 +268,17 @@ SENSORS: list[DeliosInverterAttribute] = [
         key="li_ion_info",
         name="Li-ION Info",
         value=lambda data: int(data["parameters"].get("InfoLiIonBatt")) != 0,
+    ),
+    DeliosInverterAttribute(
+        type=DeliosEntityType.SENSOR,
+        key="last_alarm",
+        name="Last alarm",
+        value=lambda data: (
+            data["alarms"].last_alarm_code if data["alarms"] else None),
+        attributes={
+            "description": lambda data: (data["alarms"].last_alarm_description if data["alarms"] else None),
+            "alarm_date": lambda data: (data["alarms"].last_alarm_date if data["alarms"] else None),
+        },
     ),
 ]
 
