@@ -8,6 +8,7 @@ from enum import Enum
 from typing import Any, Optional
 
 from attr import dataclass
+from .client import StatusData, FirmwareData, TotalizerData
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
@@ -72,7 +73,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
         unit_of_measurement=UnitOfPower.WATT,
-        value=lambda data: float(data["sensors"].get("PowerBatt")) * 1000,
+        value=lambda data: float(data["sensors"].get("PowerBatt")) * 1000
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -81,7 +86,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
         unit_of_measurement=UnitOfPower.WATT,
-        value=lambda data: float(data["sensors"].get("PowerGrid")) * 1000,
+        value=lambda data: float(data["sensors"].get("PowerGrid")) * 1000
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -90,7 +99,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
         unit_of_measurement=UnitOfPower.WATT,
-        value=lambda data: float(data["sensors"].get("PowerPV")) * 1000,
+        value=lambda data: float(data["sensors"].get("PowerPV")) * 1000
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -99,7 +112,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
         unit_of_measurement=UnitOfPower.WATT,
-        value=lambda data: float(data["sensors"].get("PowerHouse")) * 1000,
+        value=lambda data: float(data["sensors"].get("PowerHouse")) * 1000
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -108,7 +125,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.BATTERY,
         unit_of_measurement=PERCENTAGE,
-        value=lambda data: float(data["sensors"].get("PercentBattery")),
+        value=lambda data: float(data["sensors"].get("PercentBattery"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -117,7 +138,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.CURRENT,
         unit_of_measurement=UnitOfElectricCurrent.AMPERE,
-        value=lambda data: float(data["sensors"].get("IL1")),
+        value=lambda data: float(data["sensors"].get("IL1"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -126,7 +151,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.VOLTAGE,
         unit_of_measurement=UnitOfElectricPotential.VOLT,
-        value=lambda data: float(data["sensors"].get("VL1")),
+        value=lambda data: float(data["sensors"].get("VL1"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -135,7 +164,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.CURRENT,
         unit_of_measurement=UnitOfElectricCurrent.AMPERE,
-        value=lambda data: float(data["sensors"].get("IS1")),
+        value=lambda data: float(data["sensors"].get("IS1"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -144,7 +177,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.VOLTAGE,
         unit_of_measurement=UnitOfElectricPotential.VOLT,
-        value=lambda data: float(data["sensors"].get("VS1")),
+        value=lambda data: float(data["sensors"].get("VS1"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -153,7 +190,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.CURRENT,
         unit_of_measurement=UnitOfElectricCurrent.AMPERE,
-        value=lambda data: float(data["sensors"].get("IS2")),
+        value=lambda data: float(data["sensors"].get("IS2"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -162,7 +203,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.VOLTAGE,
         unit_of_measurement=UnitOfElectricPotential.VOLT,
-        value=lambda data: float(data["sensors"].get("VS2")),
+        value=lambda data: float(data["sensors"].get("VS2"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -171,7 +216,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.CURRENT,
         unit_of_measurement=UnitOfElectricCurrent.AMPERE,
-        value=lambda data: float(data["sensors"].get("IBatt")),
+        value=lambda data: float(data["sensors"].get("IBatt"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -180,28 +229,44 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.VOLTAGE,
         unit_of_measurement=UnitOfElectricPotential.VOLT,
-        value=lambda data: float(data["sensors"].get("VBatt")),
+        value=lambda data: float(data["sensors"].get("VBatt"))
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.BINARY_SENSOR,
         key="inverter_alarm",
         name="Inverter Alarm",
         device_class=BinarySensorDeviceClass.PROBLEM,
-        value=lambda data: int(data["sensors"].get("InvAlarm")) != 0,
+        value=lambda data: int(data["sensors"].get("InvAlarm")) != 0
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.BINARY_SENSOR,
         key="photovoltaic_alarm",
         name="Photovoltaic Alarm",
         device_class=BinarySensorDeviceClass.PROBLEM,
-        value=lambda data: int(data["sensors"].get("PVAlarm")) != 0,
+        value=lambda data: int(data["sensors"].get("PVAlarm")) != 0
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.BINARY_SENSOR,
         key="battery_alarm",
         name="Battery Alarm",
         device_class=BinarySensorDeviceClass.PROBLEM,
-        value=lambda data: int(data["sensors"].get("BattAlarm")) != 0,
+        value=lambda data: int(data["sensors"].get("BattAlarm")) != 0
+        if isinstance(data, dict)
+        and "sensors" in data
+        and isinstance(data["sensors"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -210,7 +275,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         unit_of_measurement=UnitOfTemperature.CELSIUS,
-        value=lambda data: float(data["parameters"].get("ACinvTemp")),
+        value=lambda data: float(data["parameters"].get("ACinvTemp"))
+        if isinstance(data, dict)
+        and "parameters" in data
+        and isinstance(data["parameters"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -219,7 +288,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.TEMPERATURE,
         unit_of_measurement=UnitOfTemperature.CELSIUS,
-        value=lambda data: float(data["parameters"].get("BatteryTemp")),
+        value=lambda data: float(data["parameters"].get("BatteryTemp"))
+        if isinstance(data, dict)
+        and "parameters" in data
+        and isinstance(data["parameters"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -227,7 +300,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="R iso PV1",
         state_class=SensorStateClass.MEASUREMENT,
         unit_of_measurement="KOhm",
-        value=lambda data: float(data["parameters"].get("Riso1")),
+        value=lambda data: float(data["parameters"].get("Riso1"))
+        if isinstance(data, dict)
+        and "parameters" in data
+        and isinstance(data["parameters"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -235,7 +312,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="R iso PV2",
         state_class=SensorStateClass.MEASUREMENT,
         unit_of_measurement="KOhm",
-        value=lambda data: float(data["parameters"].get("Riso2")),
+        value=lambda data: float(data["parameters"].get("Riso2"))
+        if isinstance(data, dict)
+        and "parameters" in data
+        and isinstance(data["parameters"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -243,7 +324,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="R iso Com",
         state_class=SensorStateClass.MEASUREMENT,
         unit_of_measurement="KOhm",
-        value=lambda data: float(data["parameters"].get("RisoM")),
+        value=lambda data: float(data["parameters"].get("RisoM"))
+        if isinstance(data, dict)
+        and "parameters" in data
+        and isinstance(data["parameters"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -252,7 +337,11 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.CURRENT,
         unit_of_measurement=UnitOfElectricCurrent.MILLIAMPERE,
-        value=lambda data: float(data["parameters"].get("IDiff")),
+        value=lambda data: float(data["parameters"].get("IDiff"))
+        if isinstance(data, dict)
+        and "parameters" in data
+        and isinstance(data["parameters"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -261,13 +350,21 @@ SENSORS: list[DeliosInverterAttribute] = [
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.CURRENT,
         unit_of_measurement=UnitOfElectricCurrent.MILLIAMPERE,
-        value=lambda data: float(data["parameters"].get("IDiffTest")),
+        value=lambda data: float(data["parameters"].get("IDiffTest"))
+        if isinstance(data, dict)
+        and "parameters" in data
+        and isinstance(data["parameters"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.BINARY_SENSOR,
         key="li_ion_info",
         name="Li-ION Info",
-        value=lambda data: int(data["parameters"].get("InfoLiIonBatt")) != 0,
+        value=lambda data: int(data["parameters"].get("InfoLiIonBatt")) != 0
+        if isinstance(data, dict)
+        and "parameters" in data
+        and isinstance(data["parameters"], dict)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -276,8 +373,12 @@ SENSORS: list[DeliosInverterAttribute] = [
         value=lambda data: (
             data["alarms"].last_alarm_code if data["alarms"] else None),
         attributes={
-            "description": lambda data: (data["alarms"].last_alarm_description if data["alarms"] else None),
-            "alarm_date": lambda data: (data["alarms"].last_alarm_date if data["alarms"] else None),
+            "description": lambda data: (
+                data["alarms"].last_alarm_description if data["alarms"] else None
+            ),
+            "alarm_date": lambda data: (
+                data["alarms"].last_alarm_date if data["alarms"] else None
+            ),
         },
     ),
 ]
@@ -288,51 +389,83 @@ SETTINGS: list[DeliosEntityType] = [
         key="usb",
         name="USB",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
-        value=lambda data: data["status"].usb,
+        value=lambda data: data["status"].usb
+        if isinstance(data, dict)
+        and "status" in data
+        and isinstance(data["status"], StatusData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.BINARY_SENSOR,
         key="lan",
         name="LAN",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
-        value=lambda data: data["status"].lan,
+        value=lambda data: data["status"].lan
+        if isinstance(data, dict)
+        and "status" in data
+        and isinstance(data["status"], StatusData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.BINARY_SENSOR,
         key="wifi",
         name="Wi-Fi",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
-        value=lambda data: data["status"].wifi,
+        value=lambda data: data["status"].wifi
+        if isinstance(data, dict)
+        and "status" in data
+        and isinstance(data["status"], StatusData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
         key="machine_firmware",
         name="Machine Firmware",
-        value=lambda data: data["firmware"].machine,
+        value=lambda data: data["firmware"].machine
+        if isinstance(data, dict)
+        and "firmware" in data
+        and isinstance(data["firmware"], FirmwareData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
         key="grid_firmware",
         name="Grid Firmware",
-        value=lambda data: data["firmware"].grid,
+        value=lambda data: data["firmware"].grid
+        if isinstance(data, dict)
+        and "firmware" in data
+        and isinstance(data["firmware"], FirmwareData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
         key="photovoltaic_firmware",
         name="Photovoltaic Firmware",
-        value=lambda data: data["firmware"].photovoltaic,
+        value=lambda data: data["firmware"].photovoltaic
+        if isinstance(data, dict)
+        and "firmware" in data
+        and isinstance(data["firmware"], FirmwareData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
         key="battery_firmware",
         name="Battery Firmware",
-        value=lambda data: data["firmware"].battery,
+        value=lambda data: data["firmware"].battery
+        if isinstance(data, dict)
+        and "firmware" in data
+        and isinstance(data["firmware"], FirmwareData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
         key="inverter_firmware",
         name="Inverter Firmware",
-        value=lambda data: data["firmware"].firmware,
+        value=lambda data: data["firmware"].firmware
+        if isinstance(data, dict)
+        and "firmware" in data
+        and isinstance(data["firmware"], FirmwareData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -342,7 +475,11 @@ SETTINGS: list[DeliosEntityType] = [
         device_class=SensorDeviceClass.ENERGY,
         unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         suggested_display_precision=2,
-        value=lambda data: data["totalizer"].photovoltaic,
+        value=lambda data: data["totalizer"].photovoltaic
+        if isinstance(data, dict)
+        and "totalizer" in data
+        and isinstance(data["totalizer"], TotalizerData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -352,7 +489,11 @@ SETTINGS: list[DeliosEntityType] = [
         device_class=SensorDeviceClass.ENERGY,
         unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         suggested_display_precision=2,
-        value=lambda data: data["totalizer"].buyed,
+        value=lambda data: data["totalizer"].buyed
+        if isinstance(data, dict)
+        and "totalizer" in data
+        and isinstance(data["totalizer"], TotalizerData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -362,7 +503,11 @@ SETTINGS: list[DeliosEntityType] = [
         device_class=SensorDeviceClass.ENERGY,
         unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         suggested_display_precision=2,
-        value=lambda data: data["totalizer"].injected,
+        value=lambda data: data["totalizer"].injected
+        if isinstance(data, dict)
+        and "totalizer" in data
+        and isinstance(data["totalizer"], TotalizerData)
+        else None,
     ),
     DeliosInverterAttribute(
         type=DeliosEntityType.SENSOR,
@@ -372,6 +517,10 @@ SETTINGS: list[DeliosEntityType] = [
         device_class=SensorDeviceClass.ENERGY,
         unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         suggested_display_precision=2,
-        value=lambda data: data["totalizer"].self_consumed,
+        value=lambda data: data["totalizer"].self_consumed
+        if isinstance(data, dict)
+        and "totalizer" in data
+        and isinstance(data["totalizer"], TotalizerData)
+        else None,
     ),
 ]

@@ -62,7 +62,8 @@ class DeliosBinarySensor(CoordinatorEntity, BinarySensorEntity):
         if self.coordinator.data:
             self._attr_is_on = self._attribute.value(self.coordinator.data)
             self._internal_attributes = {
-                attribute: value(self.coordinator.data) for attribute, value in self._attribute.attributes.items()
+                attribute: value(self.coordinator.data)
+                for attribute, value in self._attribute.attributes.items()
             }
 
     @property
@@ -78,7 +79,8 @@ class DeliosBinarySensor(CoordinatorEntity, BinarySensorEntity):
         try:
             self._attr_is_on = self._attribute.value(self.coordinator.data)
             self._internal_attributes = {
-                attribute: value(self.coordinator.data) for attribute, value in self._attribute.attributes.items()
+                attribute: value(self.coordinator.data)
+                for attribute, value in self._attribute.attributes.items()
             }
             self.async_write_ha_state()
         except KeyError:
@@ -118,7 +120,8 @@ class DeliosSensor(CoordinatorEntity, SensorEntity):
         if self.coordinator.data:
             self._internal_value = self._attribute.value(self.coordinator.data)
             self._internal_attributes = {
-                attribute: value(self.coordinator.data) for attribute, value in self._attribute.attributes.items()
+                attribute: value(self.coordinator.data)
+                for attribute, value in self._attribute.attributes.items()
             }
 
     @property
@@ -140,7 +143,8 @@ class DeliosSensor(CoordinatorEntity, SensorEntity):
         try:
             self._internal_value = self._attribute.value(self.coordinator.data)
             self._internal_attributes = {
-                attribute: value(self.coordinator.data) for attribute, value in self._attribute.attributes.items()
+                attribute: value(self.coordinator.data)
+                for attribute, value in self._attribute.attributes.items()
             }
             self.async_write_ha_state()
         except KeyError:

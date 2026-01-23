@@ -112,8 +112,7 @@ class DeliosClient:
         """Make a request to Delios Web Server."""
         if self._token is None:
             raise UnauthorizedClient
-        session = aiohttp_client.async_get_clientsession(
-            self._hass, verify_ssl=False)
+        session = aiohttp_client.async_get_clientsession(self._hass, verify_ssl=False)
         endpoint = ENDPOINT_STRUCTURE.format(self._host, endpoint)
         headers = {"x-access-token": self._token.api_key}
         async with session.get(
@@ -187,8 +186,7 @@ class TotalizerData:
         self.photovoltaic = float(data["totalizers"]["TotalEnergyPV"])
         self.buyed = float(data["totalizers"]["TotalEnergyBuyed"])
         self.injected = float(data["totalizers"]["TotalEnergyInjected"])
-        self.self_consumed = float(
-            data["totalizers"]["TotalEnergySelfConsumed"])
+        self.self_consumed = float(data["totalizers"]["TotalEnergySelfConsumed"])
 
 
 class FirmwareData:
@@ -216,11 +214,16 @@ class AlarmsData:
     def __init__(self, data: dict) -> None:
         """Initialize alarms data from JSON."""
         if "alarms" in data and isinstance(data["alarms"], list):
-            self.alarms = [{
-                "code": alarm["desc"],
-                "description": ERRORS[alarm["desc"]] if alarm["desc"] in ERRORS else ERRORS["E999"],
-                "date": datetime.fromtimestamp(int(alarm["timestamp"]) / 1000),
-            } for alarm in data["alarms"]]
+            self.alarms = [
+                {
+                    "code": alarm["desc"],
+                    "description": ERRORS[alarm["desc"]]
+                    if alarm["desc"] in ERRORS
+                    else ERRORS["E999"],
+                    "date": datetime.fromtimestamp(int(alarm["timestamp"]) / 1000),
+                }
+                for alarm in data["alarms"]
+            ]
 
     @property
     def last_alarm_code(self) -> str | None:

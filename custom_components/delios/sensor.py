@@ -31,11 +31,11 @@ async def async_setup_entry(
         hass.data[DOMAIN][inverter.unique_id][SENSOR_DOMAIN] = {}
     sensors_coordinator = DeliosSensorsCoordinator(hass, inverter)
     await sensors_coordinator.setup()
-    await sensors_coordinator.async_config_entry_first_refresh()
+    await sensors_coordinator.async_refresh()
     sensors_coordinator.add_entities(async_add_entities, DeliosEntityType.SENSOR)
     system_coordinator = DeliosSystemCoordinator(hass, inverter)
     await system_coordinator.setup()
-    await system_coordinator.async_config_entry_first_refresh()
+    await system_coordinator.async_refresh()
     system_coordinator.add_entities(async_add_entities, DeliosEntityType.SENSOR)
 
 
