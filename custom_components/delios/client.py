@@ -217,9 +217,11 @@ class AlarmsData:
             self.alarms = [
                 {
                     "code": alarm["desc"],
-                    "description": ERRORS[alarm["desc"]]
-                    if alarm["desc"] in ERRORS
-                    else ERRORS["E999"],
+                    "description": (
+                        ERRORS[alarm["desc"]]
+                        if alarm["desc"] in ERRORS
+                        else ERRORS["E999"]
+                    ),
                     "date": datetime.fromtimestamp(int(alarm["timestamp"]) / 1000),
                 }
                 for alarm in data["alarms"]
