@@ -8,7 +8,14 @@ from enum import Enum
 from typing import Any, Optional
 
 from attr import dataclass
-from .client import StatusData, FirmwareData, TotalizerData
+from .client import (
+    AlarmsData,
+    StatusData,
+    FirmwareData,
+    TotalizerData,
+    SensorsData,
+    ParametersData,
+)
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
@@ -77,7 +84,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("PowerBatt")) * 1000
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -92,7 +99,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("PowerGrid")) * 1000
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -107,7 +114,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("PowerPV")) * 1000
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -122,7 +129,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("PowerHouse")) * 1000
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -137,7 +144,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("PercentBattery"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -152,7 +159,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("IL1"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -167,7 +174,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("VL1"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -182,7 +189,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("IS1"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -197,7 +204,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("VS1"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -212,7 +219,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("IS2"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -227,7 +234,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("VS2"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -242,7 +249,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("IBatt"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -257,7 +264,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["sensors"].get("VBatt"))
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -270,7 +277,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             int(data["sensors"].get("InvAlarm")) != 0
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -283,7 +290,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             int(data["sensors"].get("PVAlarm")) != 0
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -296,7 +303,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             int(data["sensors"].get("BattAlarm")) != 0
             if isinstance(data, dict)
             and "sensors" in data
-            and isinstance(data["sensors"], dict)
+            and isinstance(data["sensors"], SensorsData)
             else None
         ),
     ),
@@ -311,7 +318,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["parameters"].get("ACinvTemp"))
             if isinstance(data, dict)
             and "parameters" in data
-            and isinstance(data["parameters"], dict)
+            and isinstance(data["parameters"], ParametersData)
             else None
         ),
     ),
@@ -326,7 +333,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["parameters"].get("BatteryTemp"))
             if isinstance(data, dict)
             and "parameters" in data
-            and isinstance(data["parameters"], dict)
+            and isinstance(data["parameters"], ParametersData)
             else None
         ),
     ),
@@ -340,7 +347,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["parameters"].get("Riso1"))
             if isinstance(data, dict)
             and "parameters" in data
-            and isinstance(data["parameters"], dict)
+            and isinstance(data["parameters"], ParametersData)
             else None
         ),
     ),
@@ -354,7 +361,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["parameters"].get("Riso2"))
             if isinstance(data, dict)
             and "parameters" in data
-            and isinstance(data["parameters"], dict)
+            and isinstance(data["parameters"], ParametersData)
             else None
         ),
     ),
@@ -368,7 +375,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["parameters"].get("RisoM"))
             if isinstance(data, dict)
             and "parameters" in data
-            and isinstance(data["parameters"], dict)
+            and isinstance(data["parameters"], ParametersData)
             else None
         ),
     ),
@@ -383,7 +390,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["parameters"].get("IDiff"))
             if isinstance(data, dict)
             and "parameters" in data
-            and isinstance(data["parameters"], dict)
+            and isinstance(data["parameters"], ParametersData)
             else None
         ),
     ),
@@ -398,7 +405,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             float(data["parameters"].get("IDiffTest"))
             if isinstance(data, dict)
             and "parameters" in data
-            and isinstance(data["parameters"], dict)
+            and isinstance(data["parameters"], ParametersData)
             else None
         ),
     ),
@@ -410,7 +417,7 @@ SENSORS: list[DeliosInverterAttribute] = [
             int(data["parameters"].get("InfoLiIonBatt")) != 0
             if isinstance(data, dict)
             and "parameters" in data
-            and isinstance(data["parameters"], dict)
+            and isinstance(data["parameters"], ParametersData)
             else None
         ),
     ),
@@ -418,13 +425,27 @@ SENSORS: list[DeliosInverterAttribute] = [
         type=DeliosEntityType.SENSOR,
         key="last_alarm",
         name="Last alarm",
-        value=lambda data: (data["alarms"].last_alarm_code if data["alarms"] else None),
+        value=lambda data: (
+            data["alarms"].last_alarm_code
+            if isinstance(data, dict)
+            and "alarms" in data
+            and isinstance(data["alarms"], AlarmsData)
+            else None
+        ),
         attributes={
             "description": lambda data: (
-                data["alarms"].last_alarm_description if data["alarms"] else None
+                data["alarms"].last_alarm_description
+                if isinstance(data, dict)
+                and "alarms" in data
+                and isinstance(data["alarms"], AlarmsData)
+                else None
             ),
             "alarm_date": lambda data: (
-                data["alarms"].last_alarm_date if data["alarms"] else None
+                data["alarms"].last_alarm_date
+                if isinstance(data, dict)
+                and "alarms" in data
+                and isinstance(data["alarms"], AlarmsData)
+                else None
             ),
         },
     ),
