@@ -79,9 +79,10 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="Battery Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
-            float(data["sensors"].get("PowerBatt")) * 1000
+            float(data["sensors"].get("PowerBatt"))
             if isinstance(data, dict)
             and "sensors" in data
             and isinstance(data["sensors"], SensorsData)
@@ -94,9 +95,10 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="Battery Charge Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
-            max(0.0, -float(data["sensors"].get("PowerBatt")) * 1000)
+            max(0.0, -float(data["sensors"].get("PowerBatt")))
             if isinstance(data, dict)
             and "sensors" in data
             and isinstance(data["sensors"], SensorsData)
@@ -109,9 +111,10 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="Battery Discharge Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
-            max(0.0, float(data["sensors"].get("PowerBatt")) * 1000)
+            max(0.0, float(data["sensors"].get("PowerBatt")))
             if isinstance(data, dict)
             and "sensors" in data
             and isinstance(data["sensors"], SensorsData)
@@ -158,9 +161,10 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="Grid Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
-            float(data["sensors"].get("PowerGrid")) * 1000
+            float(data["sensors"].get("PowerGrid"))
             if isinstance(data, dict)
             and "sensors" in data
             and isinstance(data["sensors"], SensorsData)
@@ -173,9 +177,10 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="Photovoltaic Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
-            float(data["sensors"].get("PowerPV")) * 1000
+            float(data["sensors"].get("PowerPV"))
             if isinstance(data, dict)
             and "sensors" in data
             and isinstance(data["sensors"], SensorsData)
@@ -188,9 +193,10 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="House Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
-            float(data["sensors"].get("PowerHouse")) * 1000
+            float(data["sensors"].get("PowerHouse"))
             if isinstance(data, dict)
             and "sensors" in data
             and isinstance(data["sensors"], SensorsData)
@@ -210,9 +216,10 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="Buyed Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
-            max(0.0, float(data["sensors"].get("PowerGrid")) * 1000)
+            max(0.0, float(data["sensors"].get("PowerGrid")))
             if isinstance(data, dict)
             and "sensors" in data
             and isinstance(data["sensors"], SensorsData)
@@ -225,9 +232,10 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="Injected Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
-            max(0.0, -float(data["sensors"].get("PowerGrid")) * 1000)
+            max(0.0, -float(data["sensors"].get("PowerGrid")))
             if isinstance(data, dict)
             and "sensors" in data
             and isinstance(data["sensors"], SensorsData)
@@ -240,15 +248,13 @@ SENSORS: list[DeliosInverterAttribute] = [
         name="Self Consumed Power",
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.POWER,
-        unit_of_measurement=UnitOfPower.WATT,
+        unit_of_measurement=UnitOfPower.KILO_WATT,
+        suggested_display_precision=2,
         value=lambda data: (
             max(
                 0.0,
-                (
-                    float(data["sensors"].get("PowerPV"))
-                    - max(0.0, -float(data["sensors"].get("PowerGrid")))
-                )
-                * 1000,
+                float(data["sensors"].get("PowerPV"))
+                - max(0.0, -float(data["sensors"].get("PowerGrid"))),
             )
             if isinstance(data, dict)
             and "sensors" in data

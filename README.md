@@ -93,7 +93,7 @@ Home Assistant installation.
 The integration exposes dedicated battery charge/discharge sensors so the battery
 can be tracked in the Home Assistant Energy dashboard:
 
-- **Battery Charge Power** / **Battery Discharge Power** _(W)_: the instantaneous
+- **Battery Charge Power** / **Battery Discharge Power** _(kW)_: the instantaneous
   power flowing into and out of the battery, split by direction.
 - **Battery Charge Energy Total** / **Battery Discharge Energy Total** _(kWh)_:
   cumulative energy stored into and drawn from the battery. The Delios API only
@@ -126,7 +126,7 @@ consumption and _Injected Energy Total_ as return to grid in the Energy dashboar
 
 ### Instantaneous power flows
 
-The integration also exposes the matching **instantaneous power** _(W)_ so each
+The integration also exposes the matching **instantaneous power** _(kW)_ so each
 flow can be tracked live on a normal dashboard (power-flow cards, gauges, history):
 
 - **Photovoltaic Power** — instantaneous PV production (`photovoltaic_power`).
